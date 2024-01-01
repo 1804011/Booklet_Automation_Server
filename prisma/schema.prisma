@@ -10,13 +10,26 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum StudentRole {
+  student
+}
+
+enum AdminRole {
+  admin
+}
+
+enum DoctorRole {
+  doctor
+}
+
 model Student {
-  studentId    String   @id
+  studentId    String      @id
   name         String
-  email        String   @unique
+  email        String      @unique
   password     String
   department   String
   batch        String
+  role         StudentRole
   profileImage String?
   Booklet      Booklet?
 
@@ -24,10 +37,11 @@ model Student {
 }
 
 model Admin {
-  adminId      String  @id
+  adminId      String    @id
   name         String
-  email        String  @unique
+  email        String    @unique
   password     String
+  role         AdminRole
   profileImage String?
 
   @@map("admin")
@@ -41,7 +55,9 @@ model Doctor {
   profileImage   String?
   designation    String
   specialization Json
+  role           DoctorRole
   Prescription   Prescription[]
+
   @@map("doctors")
 }
 
@@ -57,6 +73,7 @@ model Booklet {
   resident     Boolean
   student      Student        @relation(fields: [studentId], references: [studentId])
   Prescription Prescription[]
+
   @@map("booklets")
 }
 
@@ -69,6 +86,7 @@ model Prescription {
   booklet        Booklet  @relation(fields: [bookletId], references: [serialNo])
   doctor         Doctor   @relation(fields: [doctorId], references: [doctorId])
   Doses          Doses[]
+
   @@map("prescriptions")
 }
 
