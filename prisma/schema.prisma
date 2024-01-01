@@ -30,7 +30,7 @@ model Student {
   department   String
   batch        String
   role         StudentRole
-  profileImage String?
+  profileImage String?     @default("https://res.cloudinary.com/dqnw5qaoq/image/upload/v1704119134/gws3txwehxg1fshckiax.png")
   Booklet      Booklet?
 
   @@map("students")
@@ -42,21 +42,20 @@ model Admin {
   email        String    @unique
   password     String
   role         AdminRole
-  profileImage String?
+  profileImage String?   @default("https://res.cloudinary.com/dqnw5qaoq/image/upload/v1704119134/gws3txwehxg1fshckiax.png")
 
   @@map("admin")
 }
 
 model Doctor {
-  doctorId       String         @id
-  name           String
-  email          String         @unique
-  password       String
-  profileImage   String?
-  designation    String
-  specialization Json
-  role           DoctorRole
-  Prescription   Prescription[]
+  doctorId     String  @id
+  name         String
+  email        String  @unique
+  password     String
+  profileImage String? @default("https://res.cloudinary.com/dqnw5qaoq/image/upload/v1704119134/gws3txwehxg1fshckiax.png")
+  designation  String
+  role         DoctorRole
+  Prescription Prescription[]
 
   @@map("doctors")
 }
