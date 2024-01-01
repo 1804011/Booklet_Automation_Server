@@ -1,0 +1,83 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Student {
+  studentId    String   @id
+  name         String
+  email        String   @unique
+  password     String
+  department   String
+  batch        String
+  profileImage String?
+  Booklet      Booklet?
+
+  @@map("students")
+}
+
+model Admin {
+  adminId      String  @id
+  name         String
+  email        String  @unique
+  password     String
+  profileImage String?
+
+  @@map("admin")
+}
+
+model Doctor {
+  doctorId       String         @id
+  name           String
+  email          String         @unique
+  password       String
+  profileImage   String?
+  designation    String
+  specialization Json
+  Prescription   Prescription[]
+  @@map("doctors")
+}
+
+model Booklet {
+  serialNo     Int            @id @default(autoincrement())
+  studentId    String         @unique
+  mobileNo     String         @unique
+  Level        Int
+  Term         Int
+  session      String
+  hallName     String
+  bloodGroup   String
+  resident     Boolean
+  student      Student        @relation(fields: [studentId], references: [studentId])
+  Prescription Prescription[]
+  @@map("booklets")
+}
+
+model Prescription {
+  prescriptionId String   @id @default(uuid())
+  bookletId      Int
+  date           DateTime
+  description    String
+  doctorId       String
+  booklet        Booklet  @relation(fields: [bookletId], references: [serialNo])
+  doctor         Doctor   @relation(fields: [doctorId], references: [doctorId])
+  Doses          Doses[]
+  @@map("prescriptions")
+}
+
+model Doses {
+  prescriptionId String
+  medicine       String
+  dose           String
+  prescription   Prescription @relation(fields: [prescriptionId], references: [prescriptionId])
+
+  @@id([prescriptionId, medicine])
+  @@map("doses")
+}
