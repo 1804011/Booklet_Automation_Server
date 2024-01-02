@@ -9,6 +9,7 @@ doctorRoutes.post(
   imageUploader,
   userControllers.createDoctor,
 )
+doctorRoutes.get('/', userControllers.getAllDoctor)
 doctorRoutes.get('/:doctorId', userControllers.getDoctor)
 doctorRoutes.patch(
   '/:doctorId',

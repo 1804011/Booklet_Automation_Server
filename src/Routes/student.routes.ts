@@ -9,6 +9,9 @@ studentRoutes.post(
   imageUploader,
   userControllers.createStudent,
 )
+studentRoutes.get('/', userControllers.getAllStudent)
 studentRoutes.delete('/:studentId', userControllers.deleteStudent)
 studentRoutes.get('/:studentId', userControllers.getStudent)
+studentRoutes.patch('/:studentId', userControllers.updateStudent)
+
 export default studentRoutes

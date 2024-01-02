@@ -8,6 +8,7 @@ const createStudent = async (data: Student) => {
   const result = await prisma.student.create({ data, select: studentSelect })
   return result
 }
+const getAllStudent = async () => await prisma.student.findMany({})
 const getStudent = async (studentId: string) => {
   const result = await prisma.student.findUnique({
     where: { studentId },
@@ -46,9 +47,11 @@ const getAdmin = async () => {
 }
 const updateAdmin = async (data: Partial<Admin>) => {
   const existingAdmin = await getAdmin()
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { password, adminId, ...others } = data
   const result = await prisma.admin.update({
     where: { adminId: existingAdmin.adminId },
-    data,
+    data: others,
     select: adminSelect,
   })
   return result
@@ -60,6 +63,7 @@ const createDoctor = async (data: Doctor) => {
   })
   return result
 }
+const getAllDoctor = async () => await prisma.doctor.findMany({})
 const getDoctor = async (doctorId: string) => {
   const result = await prisma.doctor.findUnique({
     where: { doctorId },
@@ -76,11 +80,22 @@ const getDoctor = async (doctorId: string) => {
 const updateDoctor = async (doctorId: string, data: Partial<Doctor>) => {
   await getDoctor(doctorId)
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { password, ...others } = data
+  const { password, doctorId: id, ...others } = data
   const result = await prisma.doctor.update({
     where: { doctorId },
     data: others,
     select: doctorSelect,
+  })
+  return result
+}
+const updateStudent = async (studentId: string, data: Partial<Student>) => {
+  await getStudent(studentId)
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { password, studentId: id, ...others } = data
+  const result = await prisma.student.update({
+    where: { studentId },
+    data: others,
+    select: studentSelect,
   })
   return result
 }
@@ -102,4 +117,7 @@ export const userServices = {
   deleteDoctor,
   updateDoctor,
   getDoctor,
+  getAllStudent,
+  getAllDoctor,
+  updateStudent,
 }

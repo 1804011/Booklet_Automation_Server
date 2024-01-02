@@ -41,6 +41,15 @@ const getStudent: RequestHandler = catchAsync(async (req, res) => {
     data,
   })
 })
+const getAllStudent: RequestHandler = catchAsync(async (req, res) => {
+  const data = await userServices.getAllStudent()
+  sendSuccessResponse<Omit<Student, 'password'>[]>(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Students retreived successfully',
+    data,
+  })
+})
 const createDoctor: RequestHandler = catchAsync(async (req, res) => {
   const { password, ...others } = req.body
   console.log(req.body)
@@ -66,6 +75,15 @@ const getDoctor: RequestHandler = catchAsync(async (req, res) => {
     data,
   })
 })
+const getAllDoctor: RequestHandler = catchAsync(async (req, res) => {
+  const data = await userServices.getAllDoctor()
+  sendSuccessResponse<typeof data>(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Doctors retreived successfully',
+    data,
+  })
+})
 const updateDoctor: RequestHandler = catchAsync(async (req, res) => {
   const { doctorId } = req.params
 
@@ -74,6 +92,17 @@ const updateDoctor: RequestHandler = catchAsync(async (req, res) => {
     statusCode: httpStatus.OK,
     success: true,
     message: 'Doctor updated successfully',
+    data,
+  })
+})
+const updateStudent: RequestHandler = catchAsync(async (req, res) => {
+  const { studentId } = req.params
+
+  const data = await userServices.updateStudent(studentId, req.body)
+  sendSuccessResponse<typeof data>(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Student updated successfully',
     data,
   })
 })
@@ -120,4 +149,7 @@ export const userControllers = {
   createAdmin,
   updateAdmin,
   getDoctor,
+  getAllStudent,
+  getAllDoctor,
+  updateStudent,
 }
