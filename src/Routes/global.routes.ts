@@ -2,6 +2,7 @@ import express from 'express'
 import adminRoutes from './admin.routes'
 import bookletRoutes from './booklet.routes'
 import doctorRoutes from './doctor.routes'
+import prescriptionRoutes from './prescription.routes'
 import studentRoutes from './student.routes'
 
 const globalRoutes = express.Router()
@@ -21,6 +22,10 @@ const moduleRoutes = [
   {
     path: '/booklet',
     route: bookletRoutes,
+  },
+  {
+    path: '/prescription',
+    route: prescriptionRoutes,
   },
 ]
 moduleRoutes.forEach(route => globalRoutes.use(route.path, route.route))

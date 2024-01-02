@@ -48,11 +48,11 @@ model Admin {
 }
 
 model Doctor {
-  doctorId     String  @id
+  doctorId     String         @id
   name         String
-  email        String  @unique
+  email        String         @unique
   password     String
-  profileImage String? @default("https://res.cloudinary.com/dqnw5qaoq/image/upload/v1704119134/gws3txwehxg1fshckiax.png")
+  profileImage String?        @default("https://res.cloudinary.com/dqnw5qaoq/image/upload/v1704119134/gws3txwehxg1fshckiax.png")
   designation  String
   role         DoctorRole
   Prescription Prescription[]
@@ -77,24 +77,24 @@ model Booklet {
 }
 
 model Prescription {
-  prescriptionId String   @id @default(uuid())
-  bookletId      Int
-  date           DateTime
-  description    String
-  doctorId       String
-  booklet        Booklet  @relation(fields: [bookletId], references: [serialNo])
-  doctor         Doctor   @relation(fields: [doctorId], references: [doctorId])
-  Doses          Doses[]
+  prescriptionId        String                  @id @default(uuid())
+  bookletId             Int
+  date                  String
+  description           String?
+  doctorId              String
+  booklet               Booklet                 @relation(fields: [bookletId], references: [serialNo])
+  doctor                Doctor                  @relation(fields: [doctorId], references: [doctorId])
+  Prescription_medicine Prescription_medicine[]
 
   @@map("prescriptions")
 }
 
-model Doses {
+model Prescription_medicine {
   prescriptionId String
-  medicine       String
+  name           String
   dose           String
   prescription   Prescription @relation(fields: [prescriptionId], references: [prescriptionId])
 
-  @@id([prescriptionId, medicine])
-  @@map("doses")
+  @@id([prescriptionId, name])
+  @@map("medicines")
 }

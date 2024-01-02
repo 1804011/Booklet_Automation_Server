@@ -23,11 +23,15 @@ export const generateToken = (id: string, role: 'teacher' | 'student') => {
   })
   return token
 }
-export const verifyDate = (date: Date) => {
-  const today = new Date()
-  return (
-    today.getDate() === date.getDate() &&
-    today.getMonth() === date.getMonth() &&
-    today.getFullYear() === date.getFullYear()
-  )
+export const getCurrentDate = () => {
+  const today: Date = new Date()
+  const year: number = today.getFullYear()
+  const month: number = today.getMonth() + 1
+  const day: number = today.getDate()
+
+  const formattedMonth: string = month < 10 ? `0${month}` : `${month}`
+  const formattedDay: string = day < 10 ? `0${day}` : `${day}`
+  const formattedDate: string = `${year}-${formattedMonth}-${formattedDay}`
+
+  return formattedDate
 }
