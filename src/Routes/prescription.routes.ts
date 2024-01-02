@@ -10,4 +10,8 @@ prescriptionRoutes.delete(
   '/:prescriptionId',
   prescriptionControllers.deletePrescription,
 )
+prescriptionRoutes.patch(
+  '/:prescriptionId',
+  prescriptionControllers.addMedicine,
+)
 export default prescriptionRoutes

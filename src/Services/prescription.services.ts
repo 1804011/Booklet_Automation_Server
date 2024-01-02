@@ -78,6 +78,7 @@ const getPrescription = async (prescriptionId: string) => {
           session: true,
         },
       },
+      Prescription_medicine: true,
     },
   })
   if (!result) {
@@ -88,7 +89,10 @@ const getPrescription = async (prescriptionId: string) => {
   }
   return result
 }
-const addMedicine = async (prescriptionId: string, medicines: Medicine[]) => {
+const addMedicine = async (
+  prescriptionId: string,
+  medicines: Medicine[] = [],
+) => {
   await getPrescription(prescriptionId)
   const transactionResult = await prisma.$transaction(async tx => {
     const results: Prescription_medicine[] = []

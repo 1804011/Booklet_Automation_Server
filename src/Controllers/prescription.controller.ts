@@ -40,8 +40,20 @@ const getPrescription: RequestHandler = catchAsync(async (req, res) => {
     data,
   })
 })
+const addMedicine: RequestHandler = catchAsync(async (req, res) => {
+  const { prescriptionId } = req.params
+  const { medicines } = req.body
+  const data = await prescriptionServices.addMedicine(prescriptionId, medicines)
+  sendSuccessResponse<typeof data>(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: 'Medicines added successfully',
+    data,
+  })
+})
 export const prescriptionControllers = {
   createPrescription,
   deletePrescription,
   getPrescription,
+  addMedicine,
 }
