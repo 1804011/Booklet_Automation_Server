@@ -51,9 +51,40 @@ const addMedicine: RequestHandler = catchAsync(async (req, res) => {
     data,
   })
 })
+const getAllPrescriptionsOfStudent: RequestHandler = catchAsync(
+  async (req, res) => {
+    const { serialNo } = req.params
+    console.log({ serialNo })
+    const data = await prescriptionServices.getAllPrescriptionsOfStudent(
+      Number(serialNo),
+    )
+
+    sendSuccessResponse<typeof data>(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: 'All prescriptions retreived successfully',
+      data,
+    })
+  },
+)
+const getAllPrescriptionsOfDoctor: RequestHandler = catchAsync(
+  async (req, res) => {
+    const { doctorId } = req.params
+    const data =
+      await prescriptionServices.getAllPrescriptionsOfDoctor(doctorId)
+    sendSuccessResponse<typeof data>(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: 'All prescriptions retreived successfully',
+      data,
+    })
+  },
+)
 export const prescriptionControllers = {
   createPrescription,
   deletePrescription,
   getPrescription,
   addMedicine,
+  getAllPrescriptionsOfStudent,
+  getAllPrescriptionsOfDoctor,
 }

@@ -14,4 +14,12 @@ prescriptionRoutes.patch(
   '/:prescriptionId',
   prescriptionControllers.addMedicine,
 )
+prescriptionRoutes.get(
+  '/student-prescriptions/:serialNo',
+  prescriptionControllers.getAllPrescriptionsOfStudent,
+)
+prescriptionRoutes.get(
+  '/doctor-prescriptions/:doctorId',
+  prescriptionControllers.getAllPrescriptionsOfDoctor,
+)
 export default prescriptionRoutes

@@ -150,9 +150,31 @@ const deletePrescription = async (prescriptionId: string) => {
   })
   return transactionResult
 }
+const getAllPrescriptionsOfStudent = async (serialNo: number) => {
+  await bookletServices.getBooklet(serialNo)
+  const result = await prisma.prescription.findMany({
+    where: { bookletId: serialNo },
+    include: {
+      Prescription_medicine: true,
+    },
+  })
+  return result
+}
+const getAllPrescriptionsOfDoctor = async (doctorId: string) => {
+  await userServices.getDoctor(doctorId)
+  const result = await prisma.prescription.findMany({
+    where: { doctorId },
+    include: {
+      Prescription_medicine: true,
+    },
+  })
+  return result
+}
 export const prescriptionServices = {
   createPrescription,
   getPrescription,
   addMedicine,
   deletePrescription,
+  getAllPrescriptionsOfStudent,
+  getAllPrescriptionsOfDoctor,
 }
