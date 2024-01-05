@@ -12,9 +12,10 @@ const validationErrorHandler = (message: string) => {
     const errorMessages: ErrorMessage[] = []
     if (!errors.isEmpty()) {
       for (const error of errors.array()) {
-        console.log(error)
-        const { path, msg } = error
-        errorMessages.push({ path, message: msg })
+        if (error.type === 'field') {
+          const { path, msg } = error
+          errorMessages.push({ path, message: msg })
+        }
       }
       res
         .status(httpStatus.BAD_REQUEST)

@@ -1,5 +1,6 @@
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
+import { Roles } from '../Interfaces/utils.interface'
 import config from '../config'
 
 export const hashPassword = (password: string): string => {
@@ -17,7 +18,7 @@ export const comparePasswords = (
   const match = bcrypt.compareSync(password, hashedPassword)
   return match
 }
-export const generateToken = (id: string, role: 'teacher' | 'student') => {
+export const generateToken = (id: string, role: Roles) => {
   const token = jwt.sign({ id, role }, config.jwtSecret as string, {
     expiresIn: '1y',
   })
